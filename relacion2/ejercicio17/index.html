@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>División entera</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+    <div class="container mt-5">
+
+        <h1 class="mb-4">División entera</h1>
+
+        <form id="formulario" action="calcular.php" method="POST">
+
+            <div class="mb-3">
+
+                <label for="dividendo" class="form-label">Dividendo</label>
+
+                <input type="number" class="form-control"
+                       id="dividendo" name="dividendo">
+
+            </div>
+
+            <div class="mb-3">
+
+                <label for="divisor" class="form-label">Divisor</label>
+
+                <input type="number" class="form-control"
+                       id="divisor" name="divisor">
+
+            </div>
+
+            <p>Selecciona los resultados que deseas obtener:</p>
+
+            <div class="form-check mb-2">
+
+                <input type="checkbox" class="form-check-input"
+                       id="cociente" name="operaciones[]" value="cociente">
+
+                <label class="form-check-label" for="cociente">
+                    Cociente
+                </label>
+
+            </div>
+
+            <div class="form-check mb-3">
+
+                <input type="checkbox" class="form-check-input"
+                       id="resto" name="operaciones[]" value="resto">
+
+                <label class="form-check-label" for="resto">
+                    Resto
+                </label>
+
+            </div>
+
+            <p id="mensaje" class="text-danger"></p>
+
+            <button type="submit" class="btn btn-primary">
+                Calcular
+            </button>
+
+        </form>
+
+    </div>
+
+    <script>
+
+        const formulario = document.getElementById("formulario");
+
+        formulario.addEventListener("submit", function(event) {
+
+            const dividendo = document.getElementById("dividendo").value.trim();
+
+            const divisor = document.getElementById("divisor").value.trim();
+
+            const cociente = document.getElementById("cociente").checked;
+
+            const resto = document.getElementById("resto").checked;
+
+            let errores = [];
+
+            if (dividendo == "" || isNaN(dividendo) || !Number.isInteger(Number(dividendo)) || dividendo < 0) {
+                errores.push("El dividendo debe ser un número natural.");
+            }
+
+            if (divisor == "" || isNaN(divisor) || !Number.isInteger(Number(divisor)) || divisor <= 0) {
+                errores.push("El divisor debe ser un número natural mayor que cero.");
+            }
+
+            if (!cociente && !resto) {
+                errores.push("Selecciona al menos una operación.");
+            }
+
+            if (errores.length > 0) {
+
+                event.preventDefault();
+
+                document.getElementById("mensaje").innerHTML = errores.join("<br>");
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
